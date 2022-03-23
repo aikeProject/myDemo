@@ -1,26 +1,28 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
+import useAudio from './useAudio'
+import useRequestAnimationFrame from '~/composables/useRequestAnimationFrame'
 
-const audio = ref<HTMLAudioElement | null>(null)
+const { onAudio, analyser, dataArray, bufferLength } = useAudio(2 ** 10)
+const { loop, unLoop } = useRequestAnimationFrame()
+
+const music = [
+  '凯丽-夏天的风.mp3',
+  '徐佳莹 - 喜欢你.mp3',
+  '王贰浪 - 把回忆拼好给你.mp3',
+  '许嵩,金莎 - 半城烟沙 (合唱版).mp3',
+  'DJ阿福 - 草蜢-草蜢 - 半点心 (DJ_Afu Version Mix)（DJ阿福 (DJ-Afu) remix）.mp3',
+]
+
+const audio = ref<HTMLAudioElement>()
 const canvas = ref<HTMLCanvasElement | null>(null)
-let c: AudioContext
+const index = ref(0)
 
 const onLoadAudio = () => {
   if (audio.value && canvas.value) {
-    if (c) return
-    const context = c = new AudioContext()
-    const analyser = context.createAnalyser()
-    analyser.fftSize = 512
-    const source = context.createMediaElementSource(audio.value)
-
-    source.connect(analyser)
-    analyser.connect(context.destination)
-
-    const bufferLength = analyser.frequencyBinCount
-    const dataArray = new Uint8Array(bufferLength)
-
+    onAudio(audio.value)
     canvas.value.width = window.innerWidth
     canvas.value.height = window.innerHeight
 
@@ -28,21 +30,22 @@ const onLoadAudio = () => {
     const WIDTH = canvas.value.width
     const HEIGHT = canvas.value.height
 
-    const barWidth = WIDTH / bufferLength * 1.5
+    const _bufferLength = bufferLength.value
+    const _dataArray = dataArray.value
+
+    const barWidth = WIDTH / _bufferLength * 1.5
     let barHeight
 
-    function renderFrame() {
-      requestAnimationFrame(renderFrame)
-
-      analyser.getByteFrequencyData(dataArray)
+    loop(() => {
+      analyser.value?.getByteFrequencyData(_dataArray)
 
       ctx?.clearRect(0, 0, WIDTH, HEIGHT)
 
-      for (let i = 0, x = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i]
+      for (let i = 0, x = 0; i < _bufferLength; i++) {
+        barHeight = _dataArray[i]
 
-        const r = barHeight + 25 * (i / bufferLength)
-        const g = 250 * (i / bufferLength)
+        const r = barHeight + 25 * (i / _bufferLength)
+        const g = 250 * (i / _bufferLength)
         const b = 50
 
         ctx!.fillStyle = `rgb(${r},${g},${b})`
@@ -50,10 +53,21 @@ const onLoadAudio = () => {
 
         x += barWidth + 2
       }
-    }
-
-    renderFrame()
+    })
   }
+}
+
+const nextMusic = () => {
+  if (index.value >= music.length - 1)
+    index.value += 0
+  else
+    index.value += 1
+
+  if (audio.value) {
+    audio.value.src = music[index.value]
+    audio.value.play()
+  }
+  onLoadAudio()
 }
 
 const play = () => {
@@ -63,29 +77,27 @@ const play = () => {
 
 const stop = () => {
   audio.value?.pause()
+  unLoop()
 }
-
-onMounted(() => {
-
-})
 </script>
 
 <template>
   <div>
     <canvas id="canvas" ref="canvas" />
     <audio
-      id="audio"
       ref="audio"
-      controls
-      src="//m8.music.126.net/21180815163607/04976f67866d4b4d11575ab418904467/ymusic/515a/5508/520b/f0cf47930abbbb0562c9ea61707c4c0b.mp3?infoId=92001"
+      :src="music[0]"
       crossorigin="anonymous"
     />
     <div id="controls">
       <button class="text-sm btn px-5 py-2 mr-5" @click="play">
         播放
       </button>
-      <button class="text-sm btn px-5 py-2" @click="stop">
+      <button class="text-sm btn px-5 py-2 mr-5" @click="stop">
         暂停
+      </button>
+      <button class="text-sm btn px-5 py-2" @click="nextMusic">
+        下一曲
       </button>
     </div>
   </div>
