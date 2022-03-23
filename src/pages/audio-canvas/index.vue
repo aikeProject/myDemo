@@ -59,7 +59,7 @@ const onLoadAudio = () => {
 
 const nextMusic = () => {
   if (index.value >= music.length - 1)
-    index.value += 0
+    index.value = 0
   else
     index.value += 1
 
