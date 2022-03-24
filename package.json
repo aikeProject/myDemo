@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --port 3333 --open",
+    "dev:force": "vite --port 3333 --open --force",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext=.ts,.vue",

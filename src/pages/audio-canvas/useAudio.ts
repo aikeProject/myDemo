@@ -1,5 +1,3 @@
-import { ref } from 'vue'
-
 function useAudio(fftSize = 256) {
   const dataArray = ref<Uint8Array>(new Uint8Array())
   const analyser = ref<AnalyserNode>()
