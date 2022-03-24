@@ -10,6 +10,11 @@ const list = [
     title: 'web-audio-visualizer',
     desc: '使用three.js实现音频可视化',
   },
+  {
+    to: '/webgl/lesson1',
+    title: '从一个点开始',
+    desc: '编写第一个 WebGL 程序',
+  },
 ]
 </script>
 
