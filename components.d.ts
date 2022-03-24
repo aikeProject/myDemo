@@ -6,6 +6,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     Counter: typeof import('./src/components/Counter.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
+    NCard: typeof import('naive-ui')['NCard']
+    NEllipsis: typeof import('naive-ui')['NEllipsis']
+    NGrid: typeof import('naive-ui')['NGrid']
+    NGridItem: typeof import('naive-ui')['NGridItem']
   }
 }
 

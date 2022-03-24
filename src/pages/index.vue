@@ -1,20 +1,33 @@
 <script setup lang="ts">
+const list = [
+  {
+    to: '/audio-canvas',
+    title: 'audio-canvas',
+    desc: '使用canvas实现音频可视化',
+  },
+  {
+    to: '/web-audio-visualizer',
+    title: 'web-audio-visualizer',
+    desc: '使用three.js实现音频可视化',
+  },
+]
 </script>
 
 <template>
-  <div p="5">
-    <router-link
-      to="/audio-canvas"
-      class="btn"
-      m="r-2 b-2"
-    >
-      audio-canvas
-    </router-link>
-    <router-link
-      to="/webaudio-visualizer"
-      class="btn"
-    >
-      webaudio-visualizer
-    </router-link>
+  <div class="p-2">
+    <n-grid :x-gap="8" :y-gap="8" cols="1 s:3 m:4 l:5 xl:6 2xl:7" responsive="screen">
+      <n-grid-item v-for="item in list" :key="item.title">
+        <router-link :to="item.to">
+          <n-card :title="item.title" :hoverable="true">
+            <n-ellipsis :line-clamp="2">
+              {{ item.desc }}
+            </n-ellipsis>
+          </n-card>
+        </router-link>
+      </n-grid-item>
+    </n-grid>
   </div>
 </template>
+
+<style>
+</style>
