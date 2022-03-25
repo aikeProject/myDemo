@@ -17,6 +17,7 @@ const music = [
 
 const audio = ref<HTMLAudioElement>()
 const canvas = ref<HTMLCanvasElement | null>(null)
+const isPlay = ref(false)
 const index = ref(0)
 
 const onLoadAudio = () => {
@@ -69,14 +70,17 @@ const nextMusic = () => {
   onLoadAudio()
 }
 
-const play = () => {
-  audio.value?.play()
-  onLoadAudio()
-}
-
-const stop = () => {
-  audio.value?.pause()
-  unLoop()
+const playOrStop = () => {
+  if (isPlay.value) {
+    isPlay.value = false
+    audio.value?.pause()
+    unLoop()
+  }
+  else {
+    isPlay.value = true
+    audio.value?.play()
+    onLoadAudio()
+  }
 }
 </script>
 
@@ -89,11 +93,8 @@ const stop = () => {
       crossorigin="anonymous"
     />
     <div id="controls">
-      <button class="text-sm btn px-5 py-2 mr-5" @click="play">
-        播放
-      </button>
-      <button class="text-sm btn px-5 py-2 mr-5" @click="stop">
-        暂停
+      <button class="text-sm btn px-5 py-2 mr-5" @click="playOrStop">
+        {{ isPlay ? '暂停' : '播放' }}
       </button>
       <button class="text-sm btn px-5 py-2" @click="nextMusic">
         下一曲
