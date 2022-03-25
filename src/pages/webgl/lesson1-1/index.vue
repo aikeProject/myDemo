@@ -1,15 +1,19 @@
 <script setup lang="ts">
+import { reactive } from 'vue'
 import vertexShaderSource from './shader/vertexShader.vert?raw'
 import fragmentShaderSource from './shader/fragmentShader.frag?raw'
 import { createProgram, createShader, randomColor, resizeCanvas } from '~/utils/webgl-helper'
 
 const canvas = ref<HTMLCanvasElement>()
+const c = reactive({
+  width: window.innerWidth,
+  height: window.innerHeight,
+})
 
-onMounted(() => {
+onMounted(async() => {
   const _canvas = unref(canvas)
   if (!_canvas) return
   const gl = _canvas.getContext('webgl')
-  resizeCanvas(_canvas)
   if (!gl) return
 
   // 创建顶点着色器对象
@@ -68,7 +72,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <canvas ref="canvas" width="1440" height="789" />
+    <canvas ref="canvas" :width="c.width" :height="c.height" />
   </div>
 </template>
 
