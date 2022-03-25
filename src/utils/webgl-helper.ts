@@ -1,3 +1,28 @@
+/**
+ * 设置canvas宽高，默认为浏览器窗口大小
+ * @param canvas
+ * @param width
+ * @param height
+ */
+export function resizeCanvas(canvas: HTMLCanvasElement, width?: number, height?: number) {
+  if (canvas.width !== width)
+    canvas.width = width || window.innerWidth
+
+  if (canvas.height !== height)
+    canvas.height = height || window.innerHeight
+}
+
+/**
+ * 随机rgba色值
+ */
+export function randomColor() {
+  return {
+    r: Math.random() * 255,
+    g: Math.random() * 255,
+    b: Math.random() * 255,
+    a: Math.random(),
+  }
+}
 
 /**
  * 创建着色器

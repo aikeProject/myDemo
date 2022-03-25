@@ -15,6 +15,11 @@ const list = [
     title: '从一个点开始',
     desc: '编写第一个 WebGL 程序',
   },
+  {
+    to: '/webgl/lesson1-1',
+    title: '动态绘制点',
+    desc: '编写 WebGL 程序',
+  },
 ]
 </script>
 
