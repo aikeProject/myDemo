@@ -82,6 +82,10 @@ const playOrStop = () => {
     onLoadAudio()
   }
 }
+
+const ended = () => {
+  nextMusic()
+}
 </script>
 
 <template>
@@ -91,6 +95,7 @@ const playOrStop = () => {
       ref="audio"
       :src="music[0]"
       crossorigin="anonymous"
+      @ended="ended"
     />
     <div id="controls">
       <button class="text-sm btn px-5 py-2 mr-5" @click="playOrStop">
