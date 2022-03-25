@@ -20,6 +20,11 @@ const list = [
     title: '动态绘制点',
     desc: '编写 WebGL 程序',
   },
+  {
+    to: '/webgl/lesson2',
+    title: '三角形',
+    desc: '绘制基本三角形',
+  },
 ]
 </script>
 
