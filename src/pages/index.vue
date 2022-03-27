@@ -25,6 +25,11 @@ const list = [
     title: '三角形',
     desc: '绘制基本三角形',
   },
+  {
+    to: 'audio-sunburst',
+    title: '旭日图',
+    desc: '音乐可视化旭日图效果',
+  },
 ]
 </script>
 

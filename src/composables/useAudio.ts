@@ -12,6 +12,7 @@ function useAudio(fftSize = 256) {
 
     analyser.value = context.createAnalyser()
     analyser.value.fftSize = fftSize
+    // analyser.value.smoothingTimeConstant = 0.3
     source.value.connect(analyser.value!)
     analyser.value.connect(context.destination)
     bufferLength.value = analyser.value.frequencyBinCount
