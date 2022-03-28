@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
+    "antfu",
     "Attributify",
+    "singleline",
     "Vitesse",
     "webaudio"
   ],
@@ -12,4 +14,7 @@
   "files.associations": {
     "*.css": "css"
   },
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
 }

@@ -181,12 +181,8 @@ onMounted(() => {
     <div ref="main" :style="{ width, height }" />
     <div id="controls">
       <n-space>
-        <n-button type="primary" :dashed="true" @click="playOrStop">
-          {{ isPlay ? '暂停' : '播放' }}
-        </n-button>
-        <n-button type="primary" :dashed="true" @click="nextMusic">
-          下一曲
-        </n-button>
+        <n-button type="primary" :dashed="true" @click="playOrStop">{{ isPlay ? '暂停' : '播放' }}</n-button>
+        <n-button type="primary" :dashed="true" @click="nextMusic">下一曲</n-button>
       </n-space>
     </div>
     <audio
